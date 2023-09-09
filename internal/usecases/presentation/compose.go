@@ -7,18 +7,20 @@ import (
 	"log"
 )
 
-func ComposePayload(gameURL, gamePic string) map[string]interface{} {
-	if gameURL == "" || gamePic == "" {
+const endpointPuzzleTraining = "https://lichess.org/training/"
+
+func ComposePayload(gameURL, gamePicURL string) map[string]interface{} {
+	if gameURL == "" || gamePicURL == "" {
 		return nil
 	}
 
 	pl := models.Payload{
-		Username: "Coach",
-		Text:     fmt.Sprintf("[Найдите](%s) лучшее продолжение!", gameURL),
+		Username: "Daily Puzzle",
+		Text:     fmt.Sprintf("[Найдите](%s%s) лучшее продолжение!", endpointPuzzleTraining, gameURL),
 		IconURL:  "https://lichess1.org/assets/_44IzGj/logo/lichess-favicon-128.png",
 		Attachments: []map[string]interface{}{
 			{
-				"image_url": gamePic,
+				"image_url": gamePicURL,
 			},
 		},
 	}

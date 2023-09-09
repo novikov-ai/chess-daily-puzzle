@@ -8,15 +8,15 @@ import (
 
 func TestComposePayload(t *testing.T) {
 	testCases := []struct {
-		name     string
-		gameURL  string
-		gamePic  string
-		expected map[string]interface{}
+		name       string
+		gameURL    string
+		gamePicURL string
+		expected   map[string]interface{}
 	}{
 		{
-			name:    "ok",
-			gameURL: "https://example.com/game",
-			gamePic: "https://example.com/game.png",
+			name:       "ok",
+			gameURL:    "https://example.com/game",
+			gamePicURL: "https://example.com/game.png",
 			expected: map[string]interface{}{
 				"username": "Coach",
 				"text":     "[Найдите](https://example.com/game) лучшее продолжение!",
@@ -29,22 +29,22 @@ func TestComposePayload(t *testing.T) {
 			},
 		},
 		{
-			name:     "Empty URL",
-			gameURL:  "",
-			gamePic:  "https://example.com/game.png",
-			expected: nil,
+			name:       "Empty URL",
+			gameURL:    "",
+			gamePicURL: "https://example.com/game.png",
+			expected:   nil,
 		},
 		{
-			name:     "Empty gamePic",
-			gameURL:  "https://example.com/game",
-			gamePic:  "",
-			expected: nil,
+			name:       "Empty game pic URL",
+			gameURL:    "https://example.com/game",
+			gamePicURL: "",
+			expected:   nil,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			result := ComposePayload(tc.gameURL, tc.gamePic)
+			result := ComposePayload(tc.gameURL, tc.gamePicURL)
 			assert.Equal(t, result, tc.expected)
 		})
 	}
