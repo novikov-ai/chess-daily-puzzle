@@ -17,7 +17,7 @@ func ComposePayload(gameID, gamePicURL string) map[string]interface{} {
 
 	pl := models.Payload{
 		Username: Username,
-		Text:     fmt.Sprintf(TextAttr, gameURL),
+		Text:     fmt.Sprintf(Message, gameURL),
 		IconURL:  IconURL,
 		Attachments: []map[string]interface{}{
 			{
