@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"chess-daily-puzzle/internal/usecases/fetching"
-	"chess-daily-puzzle/internal/usecases/importing"
+	"chess-daily-puzzle/internal/usecases/pgn"
 	"chess-daily-puzzle/internal/usecases/presentation"
 	"encoding/json"
 	"github.com/joho/godotenv"
@@ -30,12 +30,12 @@ func main() {
 		log.Fatal("Can't fetch daily puzzle:", err)
 	}
 
-	pic, err := importing.PictureFromPGN(puzzle.Game.Pgn)
+	picURL, err := pgn.GetPictureURL(puzzle.Game.Pgn)
 	if err != nil {
-		log.Fatal("Can't fetch daily puzzle:", err)
+		log.Fatal("Can't get picture from PGN:", err)
 	}
 
-	payload := presentation.ComposePayload(puzzle.Puzzle.Id, pic)
+	payload := presentation.ComposePayload(puzzle.Puzzle.Id, picURL)
 	if payload == nil {
 		log.Fatal("Error composing payload:", err)
 	}
@@ -51,5 +51,5 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	log.Println("Webhook sent successfully.")
+	log.Println("Puzzle was sent successfully!")
 }
