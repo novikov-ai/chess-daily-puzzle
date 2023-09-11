@@ -2,58 +2,68 @@
 
 ## Overview
 
-The Chess Daily Puzzle App is a Go application that fetches daily chess puzzles from [Lichess](https://lichess.org/) and sends a message to a specific Mattermost channel using a webhook. This app allows you to stay engaged with chess puzzles and share them with your team or community on Mattermost.
+Welcome to the Chess Daily Puzzle App, a Go-powered application designed to bring the excitement of daily chess puzzles from [Lichess](https://lichess.org/) directly to your Mattermost channels. If you're passionate about chess or simply want to challenge your team or community with daily brain teasers, this app is for you.
 
-- Stay engaged and challenged by solving a new chess puzzle every day.
-- Team Building: Share chess puzzles with your team, encouraging friendly competition and problem-solving discussions.
-- Learning: Improve your chess skills by regularly practicing puzzles.
+![App Screenshot](pics/post.png)
 
-![App screenshot](pics/post.png)
+**Key Features:**
+- **Stay Engaged:** Solve a new chess puzzle every day to keep your mind sharp.
+- **Team Building:** Share chess puzzles with your team, fostering friendly competition and stimulating problem-solving discussions.
+- **Continuous Learning:** Enhance your chess skills by practicing puzzles consistently.
 
-## Analyze board, make moves and find the solution!
+## Visualize the Chess Board and Make Your Moves
 
-![Redirect to board](pics/solve.png)
+![Redirect to Board](pics/solve.png)
 
-## React with an emojis and discuss puzzle in replies
+## React with Emojis and Engage in Puzzle Discussions
 
-![Discuss with your team](pics/reply.png)
+![Discuss with Your Team](pics/reply.png)
 
-## Before Start
+## Before You Begin
 
 ### Mattermost Webhook URL
 
-Make sure that you have your Mattermost Webhook URL. You could follow these steps:
-1. Create an incoming webhook. Instructions you could find [here](https://developers.mattermost.com/integrate/webhooks/incoming/).
-2. Copy it's url. 
+Before diving into the chess challenges, ensure you have your Mattermost Webhook URL ready. If you haven't set up an incoming webhook yet, follow these simple steps:
 
-### Configure App
-1. Clone this repository to your local machine.
-2. Rename an .env.example file to .env in the project root directory.
-3. Replace MATTERMOST_WEBHOOK_URL value (`your_webhook_url_here`) in .env file with your actual Mattermost webhook URL (copied before).
+1. Create an incoming webhook. You can find step-by-step instructions [here](https://developers.mattermost.com/integrate/webhooks/incoming/).
+2. Once created, copy the generated webhook URL.
 
-### Username, Message, and IconURL
-In the internal/usecases/presentation/config.go file, you can customize the app's presentation by configuring:
+### App Configuration
 
-- Username: The username that appears when the app sends a message.
-- Message: The message template.
-- IconURL: The URL of the app's icon or avatar.
+Now, let's configure the app to connect with your Mattermost channel:
 
-Modify these values to personalize the way the app appears when sending messages.
+1. Begin by cloning this repository to your local machine.
+2. Locate the `.env.example` file in the project's root directory and rename it to `.env`.
+3. Open the `.env` file and replace the `MATTERMOST_WEBHOOK_URL` value (`your_webhook_url_here`) with the actual Mattermost webhook URL you copied earlier.
+
+### Customize Your App Presentation
+
+The app's appearance can be customized according to your preferences. In the `internal/usecases/presentation/config.go` file, you can configure:
+
+- **Username:** Choose a username that will be displayed when the app sends messages.
+- **Message:** Define the message template as you see fit.
+- **IconURL:** Set the URL for the app's icon or avatar.
+
+Modify these values to personalize the way the app appears when delivering puzzles to your Mattermost channel.
 
 ## How to Run
 
+Getting started is straightforward:
+
 1. Build the application:
 
-~~~
-make build
-~~~
+   ```bash
+   make build
+   ```
 
 2. Run the application:
 
-~~~
-./chess-daily-puzzle
-~~~
+   ```bash
+   ./chess-daily-puzzle
+   ```
 
 The app will fetch the daily chess puzzle and send it to the configured Mattermost channel using the provided webhook URL.
 
-Enjoy!
+**Note:** Currently, you need to manually run the app whenever you want to receive a new puzzle. In the future, we plan to introduce a scheduling feature, allowing you to configure when the app sends puzzles according to your preferred schedule.
+
+Enjoy the daily chess challenges and let the strategic thinking begin!
