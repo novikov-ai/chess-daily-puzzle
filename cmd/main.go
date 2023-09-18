@@ -6,19 +6,33 @@ import (
 	"chess-daily-puzzle/internal/usecases/pgn"
 	"chess-daily-puzzle/internal/usecases/presentation"
 	"encoding/json"
+	"flag"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
 )
 
+var envFlag string
+
 func main() {
+	flag.StringVar(&envFlag, "e", "debug", "environment (prod/dev)")
+
+	flag.Parse()
+
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Can't find config file")
 	}
 
-	webhookURL := os.Getenv("MATTERMOST_WEBHOOK_URL")
+	webhookURL := ""
+	switch envFlag {
+	case "prod":
+		webhookURL = os.Getenv("MATTERMOST_WEBHOOK_URL")
+	case "debug":
+		webhookURL = os.Getenv("MATTERMOST_WEBHOOK_URL_DEBUG")
+	}
+
 	if webhookURL == "" {
 		log.Fatal("Webhook url is empty")
 	}
