@@ -17,12 +17,11 @@ var envFlag string
 
 func main() {
 	flag.StringVar(&envFlag, "e", "debug", "environment (prod/dev)")
-
 	flag.Parse()
 
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Can't find config file")
+		log.Fatal("Can't find the config file")
 	}
 
 	webhookURL := ""
