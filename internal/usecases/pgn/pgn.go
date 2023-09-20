@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 const apiGameImport = "https://lichess.org/api/import"
@@ -23,6 +24,15 @@ func GetPictureURL(pgn string) (string, error) {
 	picURL, exists := pic.Attr("href")
 	if !exists {
 		return "", errors.New("picture not found")
+	}
+
+	flipBoard, err := blackMove(pgn)
+	if err != nil {
+		return "", err
+	}
+
+	if flipBoard {
+		picURL += "&color=black"
 	}
 
 	return picURL, nil
@@ -45,4 +55,13 @@ func pgnImportRetrieveHTML(pgn string) ([]byte, error) {
 	}
 
 	return respHTML, nil
+}
+
+func blackMove(pgn string) (bool, error) {
+	if pgn == "" {
+		return false, errors.New("wrong pgn format")
+	}
+
+	split := strings.Split(pgn, " ")
+	return len(split)%2 != 0, nil
 }
