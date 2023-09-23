@@ -64,6 +64,26 @@ Getting started is straightforward:
 
 The app will fetch the daily chess puzzle and send it to the configured Mattermost channel using the provided webhook URL.
 
+## How to Debug
+
+0. Set up your debug URL:
+
+   ```bash
+   MATTERMOST_WEBHOOK_URL_DEBUG = "your_webhook_url_here_for_debug"
+   ```
+
+1. Build the application:
+
+   ```bash
+   make build-debug
+   ```
+
+2. Run the application:
+
+   ```bash
+   ./chess-daily-puzzle-debug
+   ```
+
 **Note:** Currently, you need to manually run the app whenever you want to receive a new puzzle. In the future, we plan to introduce a scheduling feature, allowing you to configure when the app sends puzzles according to your preferred schedule.
 
 Enjoy the daily chess challenges and let the strategic thinking begin!
