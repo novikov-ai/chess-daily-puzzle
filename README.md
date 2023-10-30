@@ -19,6 +19,10 @@ Welcome to the Chess Daily Puzzle App, a Go-powered application designed to brin
 
 ![Discuss with Your Team](pics/reply.png)
 
+## Architecture
+
+![Architecture](pics/architecture.png)
+
 ## Before You Begin
 
 ### Mattermost Webhook URL
@@ -56,13 +60,15 @@ Getting started is straightforward:
    make build
    ```
 
-2. Run the application:
+2. Set up a schedule:
 
    ```bash
-   ./chess-daily-puzzle
+   make schedule
    ```
+   
+The App fetches a daily chess puzzle and sends it to the configured Mattermost channel using the provided webhook URL at 11:11 AM on Monday, Wednesday and Friday.
 
-The app will fetch the daily chess puzzle and send it to the configured Mattermost channel using the provided webhook URL.
+However, you could configure any kind of schedule allowed by the [crontab](https://man7.org/linux/man-pages/man5/crontab.5.html).
 
 ## How to Debug
 
@@ -83,7 +89,5 @@ The app will fetch the daily chess puzzle and send it to the configured Mattermo
    ```bash
    ./chess-daily-puzzle-debug
    ```
-
-**Note:** Currently, you need to manually run the app whenever you want to receive a new puzzle. In the future, we plan to introduce a scheduling feature, allowing you to configure when the app sends puzzles according to your preferred schedule.
-
+   
 Enjoy the daily chess challenges and let the strategic thinking begin!

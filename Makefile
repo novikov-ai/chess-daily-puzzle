@@ -16,3 +16,11 @@ build-debug:
 clean-binary:
 	rm -f ${APP}
 	rm -f ${APP-DEBUG}
+
+schedule:
+	echo "11 11 * * 1,3,5  cd /usr/local/src/chess-daily-puzzle && ./chess-daily-puzzle >> chess-daily-puzzle.log 2>&1" | crontab -
+
+schedule-disable:
+	crontab -r
+
+.PHONY: schedule
