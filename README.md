@@ -50,20 +50,14 @@ The app's appearance can be customized according to your preferences. In the `in
 
 Modify these values to personalize the way the app appears when delivering puzzles to your Mattermost channel.
 
-## How to Run
+## How to Install
 
 Getting started is straightforward:
 
-1. Build the application:
+1. Simple installation:
 
    ```bash
-   make build
-   ```
-
-2. Set up a schedule:
-
-   ```bash
-   make schedule
+   make install
    ```
    
 The App fetches a daily chess puzzle and sends it to the configured Mattermost channel using the provided webhook URL at 11:11 AM on Monday, Wednesday and Friday.
@@ -72,22 +66,26 @@ However, you could configure any kind of schedule allowed by the [crontab](https
 
 ## How to Debug
 
-0. Set up your debug URL:
+1. Set up your debug URL:
 
    ```bash
    MATTERMOST_WEBHOOK_URL_DEBUG = "your_webhook_url_here_for_debug"
    ```
 
-1. Build the application:
+2. Build and run the application:
 
    ```bash
-   make build-debug
-   ```
-
-2. Run the application:
-
-   ```bash
-   ./chess-daily-puzzle-debug
+   make run-debug
    ```
    
+## How to Uninstall
+
+1. To remove the App:
+
+   ```bash
+   make uninstall
+   ```
+   
+---
+
 Enjoy the daily chess challenges and let the strategic thinking begin!
