@@ -19,7 +19,7 @@ func TestComposePayload(t *testing.T) {
 			gamePicURL: "https://example.com/game.png",
 			expected: map[string]interface{}{
 				"username": "Daily Puzzle",
-				"text":     "[Найдите](https://lichess.org/training/12345) лучшее продолжение!",
+				"text":     "Перерыв на головоломку!\n\nСможете [найти](https://lichess.org/training/12345) лучшее продолжение в партии?",
 				"icon_url": "https://lichess1.org/assets/_44IzGj/logo/lichess-favicon-128.png",
 				"attachments": []interface{}{
 					map[string]interface{}{
