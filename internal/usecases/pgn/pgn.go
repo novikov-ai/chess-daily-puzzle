@@ -3,14 +3,18 @@ package pgn
 import (
 	"bytes"
 	"errors"
-	"github.com/PuerkitoBio/goquery"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-const apiGameImport = "https://lichess.org/api/import"
+const (
+	apiGameImport = "https://lichess.org/api/import"
+	exportFenGif  = "lichess1.org/export/fen.gif"
+)
 
 func GetPictureURL(pgn string) (string, error) {
 	respHTML, err := pgnImportRetrieveHTML(pgn)
@@ -18,11 +22,8 @@ func GetPictureURL(pgn string) (string, error) {
 		return "", err
 	}
 
-	doc, err := goquery.NewDocumentFromReader(bytes.NewBuffer(respHTML))
-	pic := doc.Find(".text.position-gif")
-
-	picURL, exists := pic.Attr("href")
-	if !exists {
+	picURL := getPositionURL(respHTML)
+	if picURL == "" {
 		return "", errors.New("picture not found")
 	}
 
@@ -47,6 +48,7 @@ func pgnImportRetrieveHTML(pgn string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	defer resp.Body.Close()
 
 	respHTML, err := io.ReadAll(resp.Body)
@@ -64,4 +66,25 @@ func blackMove(pgn string) (bool, error) {
 
 	split := strings.Split(pgn, " ")
 	return len(split)%2 != 0, nil
+}
+
+func getPositionURL(respHTML []byte) string {
+	doc, err := goquery.NewDocumentFromReader(bytes.NewBuffer(respHTML))
+	if err != nil {
+		return ""
+	}
+
+	url := ""
+	doc.Find("a").Each(func(i int, s *goquery.Selection) {
+		v, ok := s.Attr("href")
+		if !ok {
+			return
+		}
+
+		if strings.Contains(v, exportFenGif) {
+			url = v
+		}
+	})
+
+	return url
 }
