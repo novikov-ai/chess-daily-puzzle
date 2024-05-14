@@ -16,6 +16,11 @@ const (
 	exportFenGif  = "lichess1.org/export/fen.gif"
 )
 
+const (
+	colorWhite = "&color=white"
+	colorBlack = "&color=black"
+)
+
 func GetPictureURL(pgn string) (string, error) {
 	respHTML, err := pgnImportRetrieveHTML(pgn)
 	if err != nil {
@@ -33,7 +38,7 @@ func GetPictureURL(pgn string) (string, error) {
 	}
 
 	if flipBoard {
-		picURL += "&color=black"
+		picURL = picUrlWithColorBlack(picURL)
 	}
 
 	return picURL, nil
@@ -87,4 +92,12 @@ func getPositionURL(respHTML []byte) string {
 	})
 
 	return url
+}
+
+func picUrlWithColorBlack(url string) string {
+	if strings.Contains(url, colorWhite) {
+		return strings.Replace(url, colorWhite, colorBlack, 1)
+	}
+
+	return url + colorBlack
 }
