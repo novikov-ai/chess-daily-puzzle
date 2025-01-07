@@ -2,15 +2,17 @@ package main
 
 import (
 	"bytes"
-	"chess-daily-puzzle/internal/usecases/fetching"
-	"chess-daily-puzzle/internal/usecases/pgn"
-	"chess-daily-puzzle/internal/usecases/presentation"
 	"encoding/json"
 	"flag"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
+
+	"chess-daily-puzzle/internal/usecases/fetching"
+	"chess-daily-puzzle/internal/usecases/pgn"
+	"chess-daily-puzzle/internal/usecases/presentation"
+
+	"github.com/joho/godotenv"
 )
 
 var envFlag string

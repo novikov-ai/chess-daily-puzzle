@@ -1,9 +1,10 @@
 package presentation
 
 import (
-	"chess-daily-puzzle/internal/models"
 	"encoding/json"
 	"fmt"
+
+	"chess-daily-puzzle/internal/models"
 )
 
 const endpointPuzzleTraining = "https://lichess.org/training/"
