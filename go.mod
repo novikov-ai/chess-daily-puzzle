@@ -1,6 +1,6 @@
 module chess-daily-puzzle
 
-go 1.19
+go 1.23
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
