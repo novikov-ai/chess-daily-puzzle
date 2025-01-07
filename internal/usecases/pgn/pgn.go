@@ -46,7 +46,7 @@ func GetPictureURL(pgn string) (string, error) {
 
 func pgnImportRetrieveHTML(pgn string) ([]byte, error) {
 	data := url.Values{
-		"pgn": {pgn},
+		"pgn": []string{pgn},
 	}
 
 	resp, err := http.PostForm(apiGameImport, data)
