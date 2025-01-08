@@ -22,4 +22,11 @@ schedule:
 schedule-off:
 	crontab -r
 
+format: 
+	goimports -w .
+	gofumpt -w .
+
+test:
+	go test ./...
+
 .PHONY: schedule

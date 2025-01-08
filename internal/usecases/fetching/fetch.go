@@ -1,10 +1,11 @@
 package fetching
 
 import (
-	"chess-daily-puzzle/internal/models"
 	"encoding/json"
 	"io"
 	"net/http"
+
+	"chess-daily-puzzle/internal/models"
 )
 
 const apiPuzzleDaily = "https://lichess.org/api/puzzle/daily"
@@ -23,7 +24,6 @@ func DailyPuzzle() (models.Puzzle, error) {
 
 	var puzzle models.Puzzle
 	err = json.Unmarshal(body, &puzzle)
-
 	if err != nil {
 		return models.Puzzle{}, err
 	}

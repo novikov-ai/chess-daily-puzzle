@@ -2,15 +2,17 @@ package main
 
 import (
 	"bytes"
-	"chess-daily-puzzle/internal/usecases/fetching"
-	"chess-daily-puzzle/internal/usecases/pgn"
-	"chess-daily-puzzle/internal/usecases/presentation"
 	"encoding/json"
 	"flag"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
+
+	"chess-daily-puzzle/internal/usecases/fetching"
+	"chess-daily-puzzle/internal/usecases/pgn"
+	"chess-daily-puzzle/internal/usecases/presentation"
+
+	"github.com/joho/godotenv"
 )
 
 var envFlag string
@@ -48,7 +50,7 @@ func main() {
 		log.Fatal("Can't get picture from PGN:", err)
 	}
 
-	payload := presentation.ComposePayload(puzzle.Puzzle.Id, picURL)
+	payload := presentation.ComposePayload(puzzle.Puzzle.ID, picURL)
 	if payload == nil {
 		log.Fatal("Error composing payload:", err)
 	}
