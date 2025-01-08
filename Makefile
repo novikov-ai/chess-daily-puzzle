@@ -26,4 +26,7 @@ format:
 	goimports -w .
 	gofumpt -w .
 
+test:
+	go test ./...
+
 .PHONY: schedule
