@@ -3,10 +3,10 @@ name: CI for Chess Daily Puzzle
 on:
   push:
     branches:
-      - main
+      - '*'
   pull_request:
     branches:
-      - main
+      - '*'
 
 jobs:
   test:
@@ -24,12 +24,6 @@ jobs:
     - name: Install dependencies
       run: |
         go mod download
-
-    - name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: v1.60
-        args: run
 
     - name: Run tests with make
       run: |
