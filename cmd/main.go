@@ -50,7 +50,7 @@ func main() {
 		log.Fatal("Can't get picture from PGN:", err)
 	}
 
-	payload := presentation.ComposePayload(puzzle.Puzzle.Id, picURL)
+	payload := presentation.ComposePayload(puzzle.Puzzle.ID, picURL)
 	if payload == nil {
 		log.Fatal("Error composing payload:", err)
 	}

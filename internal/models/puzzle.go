@@ -2,14 +2,14 @@ package models
 
 type Puzzle struct {
 	Game struct {
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 		Perf struct {
 			Key  string `json:"key"`
 			Name string `json:"name"`
 		} `json:"perf"`
 		Rated   bool `json:"rated"`
 		Players []struct {
-			UserId string `json:"userId"`
+			UserID string `json:"userId"`
 			Name   string `json:"name"`
 			Color  string `json:"color"`
 		} `json:"players"`
@@ -17,7 +17,7 @@ type Puzzle struct {
 		Clock string `json:"clock"`
 	} `json:"game"`
 	Puzzle struct {
-		Id         string   `json:"id"`
+		ID         string   `json:"id"`
 		Rating     int      `json:"rating"`
 		Plays      int      `json:"plays"`
 		Solution   []string `json:"solution"`
