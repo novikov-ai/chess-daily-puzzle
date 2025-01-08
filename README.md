@@ -50,6 +50,23 @@ The app's appearance can be customized according to your preferences. In the `in
 
 Modify these values to personalize the way the app appears when delivering puzzles to your Mattermost channel.
 
+### Logging to your telegram channel
+
+The app provides built-in logging to your telegram channel.
+
+All you need is:
+
+1. Edit `.env` file and replace `TELEGRAM_BOT_TOKEN` value with your real token, which you can get from [BotFather](https://telegram.me/BotFather).
+2. Edit `.env` file and replace `TELEGRAM_CHAT_ID` value with your real chatID, which you can get by doing:
+   0. If you have a public channel, just use the ID after @ (next steps are for private channel)
+   1. Add your Bot to a private channel.
+   2. Send a message to the channel as Bot.
+   3. Do a GET Request:
+      ~~~
+      https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates
+      ~~~
+   4. You'll get your ID in the response. 
+
 ## How to Install
 
 Getting started is straightforward:
