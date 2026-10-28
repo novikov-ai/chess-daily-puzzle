@@ -2,6 +2,7 @@ package retry
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -33,6 +34,7 @@ func Do[T any](cfg Config, operation func() (T, error)) (T, error) {
 		}
 
 		lastErr = err
+		log.Printf("Attempt %d/%d failed: %v", attempt, cfg.MaxAttempts, err)
 
 		if attempt == cfg.MaxAttempts {
 			break
