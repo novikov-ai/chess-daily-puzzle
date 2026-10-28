@@ -3,7 +3,10 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"flag"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -54,14 +57,17 @@ func main() {
 		log.Fatal("Can't fetch daily puzzle:", err)
 	}
 
-	picURL, err := pgn.GetPictureURL(puzzle.Game.Pgn)
+	picURL, err := pgn.GetPictureURL(puzzle.Puzzle.Fen)
 	if err != nil {
-		telegram.LogError(tgLogger, "Can't get picture from PGN", err)
-		log.Fatal("Can't get picture from PGN:", err)
+		telegram.LogError(tgLogger, "Can't get picture from FEN", err)
+		log.Fatal("Can't get picture from FEN:", err)
 	}
+
+	log.Printf("Got puzzle %s, picture: %s", puzzle.Puzzle.ID, picURL)
 
 	payload := presentation.ComposePayload(puzzle.Puzzle.ID, picURL)
 	if payload == nil {
+		err = errors.New("empty puzzle id or picture url")
 		telegram.LogError(tgLogger, "Error composing payload", err)
 		log.Fatal("Error composing payload:", err)
 	}
@@ -79,6 +85,14 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	log.Println("Puzzle was sent successfully!")
-	tgLogger.Info("Puzzle was sent successfully!")
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 200))
+		err = fmt.Errorf("unexpected status code: %d, body: %q", resp.StatusCode, body)
+		telegram.LogError(tgLogger, "Webhook rejected the puzzle", err)
+		log.Fatal("Webhook rejected the puzzle:", err)
+	}
+
+	msg := fmt.Sprintf("Puzzle %s was sent successfully!", puzzle.Puzzle.ID)
+	log.Println(msg)
+	telegram.LogInfo(tgLogger, msg)
 }

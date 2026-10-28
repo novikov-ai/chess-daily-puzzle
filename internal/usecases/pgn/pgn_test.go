@@ -1,7 +1,6 @@
 package pgn
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,36 +9,30 @@ import (
 func TestGetPictureURL(t *testing.T) {
 	testCases := []struct {
 		name     string
-		pgn      string
-		err      error
+		fen      string
+		wantErr  bool
 		expected string
 	}{
 		{
 			name:     "Black moves",
-			pgn:      "e4 e6 d4 d5 Nd2 Nf6 Bd3 Be7 Ngf3 c5 dxc5 Bxc5 O-O O-O Re1 Ng4 Rf1 Nc6 h3 Nf6 Qe2 Re8 Rd1 Qb6 Nb3 dxe4 Nxc5 exf3 Qe3 Nd5 Qe4 Qxc5 Qxh7+ Kf8 Qh8+ Ke7 Qxg7 Bd7 Bg5+ Kd6 c4 Rg8 Qh6 f6 cxd5 Rxg5 dxc6",
-			err:      nil,
-			expected: "https://lichess1.org/export/fen.gif?fen=r7%2Fpp1b4%2F2Pkpp1Q%2F2q3r1%2F8%2F3B1p1P%2FPP3PP1%2FR2R2K1+b+-+-+0+1&color=black&variant=standard&theme=brown&piece=cburnett",
+			fen:      "r7/pp1b4/2Pkpp1Q/2q3r1/8/3B1p1P/PP3PP1/R2R2K1 b - - 0 1",
+			expected: "https://lichess1.org/export/fen.gif?color=black&fen=r7%2Fpp1b4%2F2Pkpp1Q%2F2q3r1%2F8%2F3B1p1P%2FPP3PP1%2FR2R2K1+b+-+-+0+1&piece=cburnett&theme=brown&variant=standard",
 		},
 		{
 			name:     "White moves",
-			pgn:      "e4 e6 d4 d5 Nd2 Nf6 Bd3 Be7 Ngf3 c5 dxc5 Bxc5 O-O O-O Re1 Ng4 Rf1 Nc6 h3 Nf6 Qe2 Re8 Rd1 Qb6 Nb3 dxe4 Nxc5 exf3 Qe3 Nd5 Qe4 Qxc5 Qxh7+ Kf8 Qh8+ Ke7 Qxg7 Bd7 Bg5+ Kd6 c4 Rg8 Qh6 f6 cxd5 Rxg5 dxc6 Rxg2",
-			err:      nil,
-			expected: "https://lichess1.org/export/fen.gif?fen=r7%2Fpp1b4%2F2Pkpp1Q%2F2q5%2F8%2F3B1p1P%2FPP3Pr1%2FR2R2K1+w+-+-+0+1&color=white&variant=standard&theme=brown&piece=cburnett",
+			fen:      "4K3/3P4/pb6/2p3p1/2P3k1/1P6/P7/8 w - - 1 1",
+			expected: "https://lichess1.org/export/fen.gif?color=white&fen=4K3%2F3P4%2Fpb6%2F2p3p1%2F2P3k1%2F1P6%2FP7%2F8+w+-+-+1+1&piece=cburnett&theme=brown&variant=standard",
 		},
-		{
-			name:     "error",
-			pgn:      "",
-			err:      errors.New("error"),
-			expected: "",
-		},
+		{name: "empty", fen: "", wantErr: true},
+		{name: "unknown side", fen: "8/8/8/8/8/8/8/8 x - - 0 1", wantErr: true},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			result, err := GetPictureURL(tc.pgn)
+			result, err := GetPictureURL(tc.fen)
 
-			assert.Equal(t, tc.err == nil, err == nil)
-			assert.Equal(t, result, tc.expected)
+			assert.Equal(t, tc.wantErr, err != nil)
+			assert.Equal(t, tc.expected, result)
 		})
 	}
 }

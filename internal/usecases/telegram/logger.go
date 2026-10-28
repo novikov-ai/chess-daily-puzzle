@@ -65,11 +65,11 @@ func (h *TelegramHandler) Enabled(ctx context.Context, level slog.Level) bool {
 }
 
 func (h *TelegramHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
-	return nil
+	return h
 }
 
 func (h *TelegramHandler) WithGroup(group string) slog.Handler {
-	return nil
+	return h
 }
 
 func LogError(log *slog.Logger, msg string, err error) {
@@ -78,4 +78,12 @@ func LogError(log *slog.Logger, msg string, err error) {
 	}
 
 	log.Error(msg, slog.Any(errAttrKey, err))
+}
+
+func LogInfo(log *slog.Logger, msg string) {
+	if log == nil {
+		return
+	}
+
+	log.Info(msg)
 }
