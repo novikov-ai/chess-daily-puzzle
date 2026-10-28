@@ -54,10 +54,10 @@ func main() {
 		log.Fatal("Can't fetch daily puzzle:", err)
 	}
 
-	picURL, err := pgn.GetPictureURL(puzzle.Game.Pgn)
+	picURL, err := pgn.GetPictureURL(puzzle.Puzzle.Fen)
 	if err != nil {
-		telegram.LogError(tgLogger, "Can't get picture from PGN", err)
-		log.Fatal("Can't get picture from PGN:", err)
+		telegram.LogError(tgLogger, "Can't get picture from FEN", err)
+		log.Fatal("Can't get picture from FEN:", err)
 	}
 
 	payload := presentation.ComposePayload(puzzle.Puzzle.ID, picURL)

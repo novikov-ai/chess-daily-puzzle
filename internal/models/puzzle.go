@@ -23,5 +23,6 @@ type Puzzle struct {
 		Solution   []string `json:"solution"`
 		Themes     []string `json:"themes"`
 		InitialPly int      `json:"initialPly"`
+		Fen        string   `json:"fen"`
 	} `json:"puzzle"`
 }
