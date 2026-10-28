@@ -3,10 +3,13 @@ package pgn
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"chess-daily-puzzle/internal/usecases/retry"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -21,6 +24,8 @@ const (
 	colorBlack = "&color=black"
 )
 
+// Предуловия: pgn — строка, представляющую собой формат файла для сохранения шахматных партий: Portable Game Notation
+// Постусловия: валидный URL-адрес с корректным расположением доски и ошибка либо ее отсутствие 
 func GetPictureURL(pgn string) (string, error) {
 	respHTML, err := pgnImportRetrieveHTML(pgn)
 	if err != nil {
@@ -45,6 +50,12 @@ func GetPictureURL(pgn string) (string, error) {
 }
 
 func pgnImportRetrieveHTML(pgn string) ([]byte, error) {
+	return retry.Do(retry.DefaultConfig(), func() ([]byte, error) {
+		return doImportRequest(pgn)
+	})
+}
+
+func doImportRequest(pgn string) ([]byte, error) {
 	data := url.Values{
 		"pgn": []string{pgn},
 	}
@@ -53,8 +64,11 @@ func pgnImportRetrieveHTML(pgn string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
 
 	respHTML, err := io.ReadAll(resp.Body)
 	if err != nil {
